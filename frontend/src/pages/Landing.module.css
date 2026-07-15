@@ -1,0 +1,21 @@
+/* Landing page wrapper */
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* No background — each zone section sets its own */
+}
+
+.navWrapper {
+  /* AppNav is already position: fixed — this wrapper is a
+     no-op layout container that keeps Landing.tsx clean */
+  position: relative;
+  height: 0;
+  overflow: visible;
+  z-index: 100;
+}
+
+main {
+  flex: 1;
+}

@@ -1,0 +1,14 @@
+/* AnnotationMark — SVG overlay on a text span */
+
+.wrap {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.mark {
+  position: absolute;
+  pointer-events: none;
+  overflow: visible;
+  z-index: -1;
+}

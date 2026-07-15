@@ -1,0 +1,60 @@
+/* TransparencyCallout — Zone 7, white, plain intentional */
+/* No glitch, no annotations, no slide — disclosure copy
+   dressed plainly on purpose. Honesty beats stylish here. */
+
+.section {
+  padding: var(--space-12) var(--space-6);
+  background: #F9FAFB;
+  border-top: 1px solid #E5E7EB;
+}
+
+.inner {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  gap: var(--space-5);
+  align-items: flex-start;
+}
+
+.icon {
+  flex-shrink: 0;
+  color: var(--green-accent);
+  margin-top: 2px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.heading {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: 0;
+}
+
+.body {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: #6B7280;
+  line-height: 1.65;
+}
+
+.body strong {
+  color: #374151;
+  font-weight: 700;
+}
+
+.link {
+  color: var(--green-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity var(--transition-fast);
+}
+
+.link:hover {
+  opacity: 0.75;
+}

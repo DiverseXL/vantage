@@ -1,0 +1,114 @@
+.skeletonBlock {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+/* MarketCardSkeleton */
+.cardSkeleton {
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.categoryTag { width: 60px; height: 20px; border-radius: 10px; }
+.dateTag { width: 80px; height: 16px; }
+.titleLine { width: 90%; height: 24px; }
+.titleLineShort { width: 60%; height: 24px; margin-top: -8px; }
+.outcomeRow {
+  display: flex;
+  gap: 12px;
+}
+.outcomeBox { flex: 1; height: 48px; border-radius: 8px; }
+.footerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+.poolInfo { width: 120px; height: 16px; }
+
+/* MarketDetailSkeleton */
+.detailSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.headerArea {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.statusTag { width: 80px; height: 24px; border-radius: 12px; }
+.mainTitle { width: 80%; height: 48px; border-radius: 8px; }
+.subTitle { width: 40%; height: 24px; }
+.gridArea {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+}
+.mainCol, .sideCol {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.heroBox { height: 200px; border-radius: 16px; }
+.chartBox { height: 300px; border-radius: 16px; }
+.actionBox { height: 280px; border-radius: 16px; }
+.actionBoxSmall { height: 120px; border-radius: 16px; }
+
+@media (max-width: 900px) {
+  .gridArea {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* StatsSkeleton */
+.statsSkeleton {
+  display: flex;
+  gap: 16px;
+}
+.statBox {
+  flex: 1;
+  height: 80px;
+  border-radius: 12px;
+}
+
+/* ActivityFeedSkeleton */
+.feedSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.feedRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.avatar { width: 32px; height: 32px; border-radius: 50%; }
+.feedTextCol { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.feedText { width: 70%; height: 14px; }
+.feedTime { width: 40px; height: 12px; }
+
+/* AIInsightSkeleton */
+.insightSkeleton {
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.insightHeader { display: flex; gap: 8px; align-items: center; margin-bottom: 4px; }
+.insightIcon { width: 24px; height: 24px; border-radius: 4px; }
+.insightTitle { width: 100px; height: 20px; }
+.insightTextLine { width: 100%; height: 16px; }
+.insightTextLineShort { width: 80%; height: 16px; }

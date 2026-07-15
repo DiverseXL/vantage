@@ -1,0 +1,166 @@
+/* MarketCategories — white bg, glitch word headline + scrolling warm cards */
+
+.section {
+  padding: var(--space-24) var(--space-6);
+  background: var(--white);
+  overflow: hidden;
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+/* ── Headline ────────────────────────────────────── */
+
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 900;
+  color: var(--ink-on-white);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.glitchWord {
+  font-family: var(--font-glitch);
+  color: var(--green-accent);
+  letter-spacing: -0.02em;
+}
+
+/* ── Scroll cards ────────────────────────────────── */
+
+.scrollRow {
+  display: flex;
+  gap: var(--space-5);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: var(--space-3);
+  /* Hide scrollbar but keep scroll */
+  scrollbar-width: none;
+}
+
+.scrollRow::-webkit-scrollbar { display: none; }
+
+/* ── Warm card ───────────────────────────────────── */
+
+.card {
+  flex: 0 0 340px;
+  height: 220px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  scroll-snap-align: start;
+  cursor: pointer;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.18);
+}
+
+/* Gradient bg for each card — warm/orange tones */
+.cardBg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease;
+}
+
+.card:hover .cardBg {
+  transform: scale(1.04);
+}
+
+/* Card background images */
+.card:nth-child(1) .cardBg {
+  background-image: url('/assets/categories/bg_group_stage.png');
+}
+
+.card:nth-child(2) .cardBg {
+  background-image: url('/assets/categories/bg_knockout.png');
+}
+
+.card:nth-child(3) .cardBg {
+  background-image: url('/assets/categories/bg_winner.png');
+}
+
+.card:nth-child(4) .cardBg {
+  background-image: url('/assets/categories/bg_scorer.png');
+}
+
+/* Darker overlay to make text highly legible over complex photos */
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.85) 100%);
+}
+
+/* Content pinned to bottom-left */
+.cardContent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-5) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cardIcon {
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 4px;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.cardBody {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: rgba(255,255,255,0.75);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.cardChip {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── Responsive ──────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .card {
+    flex: 0 0 280px;
+    height: 190px;
+  }
+}

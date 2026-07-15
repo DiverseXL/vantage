@@ -1,0 +1,63 @@
+/* StatsStrip — Zone 1, inherits green hero bg, no divider */
+
+.strip {
+  background: var(--green-bg-base);
+  padding: var(--space-12) var(--space-6) var(--space-16);
+  /* No border-top — sits flush against hero, same Zone 1 green */
+}
+
+.inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8);
+}
+
+/* ── Stat tile ───────────────────────────────────── */
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.value {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--subhead-on-green);
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+}
+
+/* Divider between stats — subtle green tint line */
+.stat + .stat {
+  border-left: 1px solid rgba(197, 224, 208, 0.15);
+}
+
+/* ── Responsive ──────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .stat + .stat {
+    border-left: none;
+    border-top: 1px solid rgba(197, 224, 208, 0.15);
+    padding-top: var(--space-6);
+  }
+}

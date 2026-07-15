@@ -1,0 +1,245 @@
+/* ============================================================
+   LOADER ELEMENTS — PixelSpinner · RouteLoader · IntroSplash
+   ============================================================ */
+
+/* ── PixelSpinner ─────────────────────────────────────── */
+.pixelSpinner {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.spinnerBlock {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background-color: currentColor;
+  border-radius: 0;
+}
+
+/* ── Route Loader ─────────────────────────────────────── */
+.routeLoader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 3px;
+  z-index: 9999;
+  display: flex;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.routeSegment {
+  flex: 1;
+  height: 100%;
+  background-color: var(--accent);
+  opacity: 0;
+  transition:
+    opacity 0.12s ease-out,
+    box-shadow 0.12s ease-out;
+  margin-right: 1px;
+}
+
+.routeSegment:last-child {
+  margin-right: 0;
+}
+
+.routeSegment.illuminated {
+  opacity: 1;
+  box-shadow: 0 0 6px var(--accent-glow), 0 0 2px rgba(35, 184, 91, 0.8);
+}
+
+/* ─────────────────────────────────────────────────────── *
+ * INTRO SPLASH — Terminal Decode                         *
+ * ─────────────────────────────────────────────────────── */
+
+/* ── Container ────────────────────────────────────────── */
+.splashContainer {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: auto;
+
+  /* Dark base */
+  background-color: #09090B;
+
+  /* Fine dot-grid: evokes a data terminal / oscilloscope */
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.055) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+}
+
+/* Ambient green glow at screen centre */
+.splashContainer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 55% 45% at 50% 50%,
+    rgba(35, 184, 91, 0.07) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Corner registration marks — top-left */
+.splashContainer::after {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  width: 18px;
+  height: 18px;
+  border-top: 1.5px solid rgba(35, 184, 91, 0.4);
+  border-left: 1.5px solid rgba(35, 184, 91, 0.4);
+  pointer-events: none;
+  z-index: 2;
+  animation: cornerFadeIn 0.6s ease 0.1s both;
+}
+
+/* Corner mark — bottom-right via box-shadow trick on a pseudoelement */
+/* We use a wrapper for both corners */
+
+@keyframes cornerFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Inner wrapper ─────────────────────────────────────── */
+.splashInner {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  user-select: none;
+}
+
+/* ── Corner marks (decorative) ─────────────────────────── */
+/* Injected via a sibling div in JSX — keep CSS here for reuse */
+.splashCorner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  opacity: 0;
+  animation: cornerFadeIn 0.5s ease 0.15s forwards;
+  z-index: 4;
+}
+.splashCorner:nth-child(1) { top: 28px; left: 28px; border-top: 1.5px solid rgba(35,184,91,0.35); border-left: 1.5px solid rgba(35,184,91,0.35); }
+.splashCorner:nth-child(2) { top: 28px; right: 28px; border-top: 1.5px solid rgba(35,184,91,0.35); border-right: 1.5px solid rgba(35,184,91,0.35); }
+.splashCorner:nth-child(3) { bottom: 28px; left: 28px; border-bottom: 1.5px solid rgba(35,184,91,0.35); border-left: 1.5px solid rgba(35,184,91,0.35); }
+.splashCorner:nth-child(4) { bottom: 28px; right: 28px; border-bottom: 1.5px solid rgba(35,184,91,0.35); border-right: 1.5px solid rgba(35,184,91,0.35); }
+
+/* ── Wordmark block ────────────────────────────────────── */
+.splashWordmark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* ── Letters row ───────────────────────────────────────── */
+.splashLetters {
+  display: flex;
+  gap: 0px;                         /* letters sit tight together */
+  font-family: var(--font-glitch, 'Array', monospace);
+  font-size: clamp(56px, 8.5vw, 88px);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  color: #F0F0EC;
+}
+
+/* Individual letter */
+.splashLetterSmooth {
+  display: inline-block;
+  min-width: 1ch;
+  text-align: center;
+  will-change: transform, opacity, filter;
+  color: #F0F0EC;
+}
+
+
+
+/* ── Tagline ───────────────────────────────────────────── */
+.splashTagline {
+  font-family: var(--font-body, 'Synonym', sans-serif);
+  font-size: clamp(10px, 1.4vw, 13px);
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(168, 168, 164, 1);
+  margin-top: 22px;
+  white-space: nowrap;
+}
+
+/* ── Metrics strip ─────────────────────────────────────── */
+.splashMetrics {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+  font-family: var(--font-body, 'Synonym', sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: rgba(168, 168, 164, 0.55);
+}
+
+.splashMetricItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.splashMetricDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent, #23B85B);
+  flex-shrink: 0;
+  box-shadow: 0 0 5px rgba(35, 184, 91, 0.7);
+}
+
+.splashMetricSep {
+  color: rgba(168, 168, 164, 0.25);
+}
+
+/* ─────────────────────────────────────────────────────── *
+ * WALLET LOADER                                          *
+ * ─────────────────────────────────────────────────────── */
+.walletLoaderContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--ink-soft, #A8A8A4);
+}
+
+.walletStateText {
+  white-space: nowrap;
+}
+
+.walletSuccess {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent, #23B85B);
+}

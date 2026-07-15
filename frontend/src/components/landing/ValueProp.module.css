@@ -1,0 +1,100 @@
+/* ValueProp — black bg, big headline + 3-column features */
+
+.section {
+  padding: var(--space-24) var(--space-6);
+  background: var(--black-section);
+  position: relative;
+  overflow: hidden;
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+/* ── Headline block ──────────────────────────────── */
+
+.headlineBlock {
+  max-width: 740px;
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.accentWord {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--gold-annotation);
+  font-family: var(--font-display);
+}
+
+.boltIcon {
+  display: inline-block;
+  color: var(--gold-annotation);
+  flex-shrink: 0;
+}
+
+/* ── Three columns ───────────────────────────────── */
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-10);
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.colIcon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.4);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.colTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.colBody {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── Responsive ──────────────────────────────────── */
+
+@media (max-width: 720px) {
+  .cols {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+}
