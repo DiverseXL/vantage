@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useUser } from '../../contexts/UserContext';
 import { useAdmin } from '../../contexts/AdminContext';
 import { useAudioContext } from '../../contexts/AudioContext';
 import { truncateId } from '../../lib/format';
-import { useConnect, useDisconnect, useAccount } from 'wagmi';
+import { useConnect, useDisconnect, useAccount, useSwitchChain } from 'wagmi';
+import { injectiveTestnet } from '../../lib/wagmi';
 import { motion, AnimatePresence } from 'framer-motion';
 import { WalletConnectionLoader } from './WalletConnectionLoader';
 import type { WalletConnectionState } from './WalletConnectionLoader';
@@ -25,7 +25,6 @@ function useIsDesktop() {
 }
 
 export function AppNav() {
-  const { userId } = useUser();
   const { isAdmin } = useAdmin();
   const { soundsEnabled, setSoundsEnabled } = useAudioContext();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -36,15 +35,14 @@ export function AppNav() {
 
   const { connect, connectors, status: connectStatus } = useConnect();
   const { disconnect } = useDisconnect();
-  const { isConnected, isConnecting } = useAccount();
+  const { isConnected, isConnecting, address, chainId } = useAccount();
+  const { switchChainAsync } = useSwitchChain();
 
   const [walletState, setWalletState] = useState<WalletConnectionState>('Disconnected');
 
   useEffect(() => {
     if (isConnected) {
       setWalletState('Connected');
-      const timer = setTimeout(() => setWalletState('Disconnected'), 2000);
-      return () => clearTimeout(timer);
     } else if (connectStatus === 'pending' || isConnecting) {
       setWalletState('Awaiting Approval');
     } else {
@@ -56,6 +54,20 @@ export function AppNav() {
     setWalletState('Opening Wallet');
     const injected = connectors.find(c => c.id === 'injected' || c.id === 'metaMask') || connectors[0];
     if (injected) connect({ connector: injected });
+  };
+
+  const onWrongNetwork = isConnected && chainId && chainId !== injectiveTestnet.id;
+
+  const handleChipClick = () => {
+    if (address) {
+      if (onWrongNetwork) {
+        switchChainAsync({ chainId: injectiveTestnet.id }).catch(() => {});
+      } else {
+        disconnect();
+      }
+    } else {
+      handleConnect();
+    }
   };
 
   useEffect(() => {
@@ -236,16 +248,22 @@ export function AppNav() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             transition={{ duration: 0.15 }}
-            className={`${styles.chip} ${!userId ? styles.chipEmpty : ''}`}
-            onClick={userId ? () => disconnect() : handleConnect}
-            title={userId ? 'Click to disconnect' : 'Connect Wallet'}
+            className={`${styles.chip} ${!address ? styles.chipEmpty : ''} ${onWrongNetwork ? styles.chipWrong : ''}`}
+            onClick={handleChipClick}
+            title={address ? (onWrongNetwork ? 'Click to switch to Injective EVM Testnet' : 'Click to disconnect') : 'Connect Wallet'}
             data-cuelume-press
             data-cuelume-release
           >
-            {userId ? (
+            {address ? (
               <>
-                <span className={styles.chipDot} aria-hidden="true" />
-                <span className={styles.chipId}>{truncateId(userId)}</span>
+                <span
+                  className={`${styles.chipDot} ${onWrongNetwork ? styles.chipDotWrong : ''}`}
+                  aria-hidden="true"
+                />
+                <span className={styles.chipId}>{truncateId(address)}</span>
+                {onWrongNetwork && (
+                  <span className={styles.chipWrongBadge}>Wrong Network</span>
+                )}
               </>
             ) : (
               <span className={styles.chipEmpty}>Connect Wallet</span>

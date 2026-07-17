@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useParams, Link } from 'react-router-dom';
+import { useAccount } from 'wagmi';
 import { useMarket } from '../hooks/useMarkets';
 import { useUser } from '../contexts/UserContext';
 import { useUserBalance } from '../hooks/useUserBalance';
@@ -17,7 +18,8 @@ import { MarketDetailSkeleton } from '../components/app/Skeletons';
 
 export function MarketDetail() {
   const { id } = useParams<{ id: string }>();
-  const { userId } = useUser();
+  const { userId, authStatus } = useUser();
+  const { isConnected } = useAccount();
   const { data: market, isLoading, isError } = useMarket(id!);
   const { data: balance } = useUserBalance(userId);
 
@@ -93,8 +95,14 @@ export function MarketDetail() {
       {/* Market header */}
       <div className={styles.header}>
         <div className={styles.headerTop}>
-          <span className={`${styles.statusPill} ${market.resolved ? styles.resolved : styles.active}`}>
-            {market.resolved ? 'Resolved' : 'Active'}
+          <span className={`${styles.statusPill} ${
+            market.resolved 
+              ? styles.resolved 
+              : market.resolutionProposed 
+                ? styles.proposed 
+                : styles.active
+          }`}>
+            {market.resolved ? 'Resolved' : market.resolutionProposed ? 'Pending Finalization' : 'Active'}
           </span>
           <span className={styles.resolutionSource}>
             <Database size={12} className={styles.resolutionIcon} />
@@ -103,6 +111,13 @@ export function MarketDetail() {
           <span className={styles.timestamp}>{formatTimestamp(market.creationTimestamp)}</span>
         </div>
         <h1 className={styles.description}>{market.description}</h1>
+        {market.resolutionProposed && !market.resolved && (
+          <div className={styles.proposedBanner}>
+            <span>Proposed winning outcome: <strong>{market.proposedOutcome === '0' ? label0 : label1}</strong></span>
+            <span className={styles.proposedDivider}>•</span>
+            <span>Finalizable after: <strong>{market.challengeWindowEndTime ? formatTimestamp(market.challengeWindowEndTime) : 'N/A'}</strong></span>
+          </div>
+        )}
       </div>
 
       {/* Pool breakdown — Match Ticket Style */}
@@ -185,7 +200,13 @@ export function MarketDetail() {
           <h2 className={styles.sectionTitle}>Your activity</h2>
           {allActivity.length === 0 ? (
             <div className={styles.noActivity}>
-              {userId ? 'No activity on this market yet.' : 'Set a user ID to see your activity.'}
+              {userId
+                ? 'No activity on this market yet.'
+                : isConnected
+                  ? authStatus === 'failed'
+                    ? 'Sign-in failed. Click retry in the betting panel above.'
+                    : 'Sign the message in your wallet to continue.'
+                  : 'Connect your wallet to see your activity.'}
             </div>
           ) : (
             <motion.ul className={styles.activityList} layout>

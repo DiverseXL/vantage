@@ -5,6 +5,64 @@
   background: var(--bg-base);
 }
 
+/* ── Network-warning banner ──────────────── */
+.networkBanner {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  overflow: hidden;
+  max-width: 750px;
+  width: calc(100% - 32px);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.networkBannerInner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: #1A1200;
+  border: 1px solid rgba(245, 168, 0, 0.35);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: #F5A800;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.bannerText {
+  flex-shrink: 0;
+}
+
+.bannerSwitchBtn {
+  flex-shrink: 0;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  color: #1A1200;
+  background: #F5A800;
+  border: none;
+  border-radius: 9999px;
+  padding: 5px 14px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.bannerSwitchBtn:hover {
+  background: #FFC107;
+  transform: translateY(-1px);
+}
+
+.bannerSwitchBtn:active {
+  transform: scale(0.97);
+}
+
+/* ── Main content ────────────────────────── */
 .main {
   flex: 1;
   max-width: 1100px;

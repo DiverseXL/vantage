@@ -9,9 +9,13 @@ export function formatInj(wei: string, decimals = 2): string {
   }
 }
 
-/** Formats a unix timestamp (seconds as string) to a readable date */
+/** Formats a unix timestamp (seconds or milliseconds) to a readable date */
 export function formatTimestamp(ts: string | number): string {
-  const ms = typeof ts === 'string' ? parseInt(ts, 10) * 1000 : ts * 1000;
+  const parsed = typeof ts === 'string' ? parseInt(ts, 10) : Number(ts);
+  if (isNaN(parsed)) return 'Invalid Date';
+  // If the timestamp is in milliseconds (usually > 50 billion), keep it as is.
+  // Otherwise, it is in seconds (e.g. smart contract block.timestamp), so convert to milliseconds.
+  const ms = parsed > 50000000000 ? parsed : parsed * 1000;
   return new Date(ms).toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'short',

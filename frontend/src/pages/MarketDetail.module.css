@@ -480,3 +480,40 @@
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+.proposed {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.proposed::before {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f59e0b;
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.6);
+  animation: blink 2s ease-in-out infinite;
+}
+
+.proposedBanner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  background: rgba(245, 158, 11, 0.05);
+  border: 1px dashed rgba(245, 158, 11, 0.3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  margin-top: var(--space-2);
+  width: fit-content;
+  font-family: var(--font-body);
+}
+
+.proposedDivider {
+  color: rgba(245, 158, 11, 0.3);
+}
+

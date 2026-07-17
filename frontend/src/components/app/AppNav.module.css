@@ -273,6 +273,50 @@
   color: #fff;
 }
 
+.chipWrong {
+  border-color: rgba(245, 168, 0, 0.6);
+  background: linear-gradient(135deg, rgba(245, 168, 0, 0.18) 0%, rgba(40, 25, 0, 0.7) 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.chipWrong:hover {
+  border-color: rgba(245, 168, 0, 0.85);
+  background: linear-gradient(135deg, rgba(245, 168, 0, 0.30) 0%, rgba(50, 30, 0, 0.85) 100%);
+  box-shadow: 0 0 16px rgba(245, 168, 0, 0.35), 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.chipDotWrong {
+  background: #F5A800;
+  animation: pulse-amber 2s infinite;
+}
+
+@keyframes pulse-amber {
+  0% {
+    box-shadow: 0 0 0 0 rgba(245, 168, 0, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(245, 168, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 168, 0, 0);
+  }
+}
+
+.chipWrongBadge {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #F5A800;
+  background: rgba(245, 168, 0, 0.15);
+  border: 1px solid rgba(245, 168, 0, 0.35);
+  border-radius: var(--radius-pill);
+  padding: 1px 6px;
+  margin-left: 4px;
+  line-height: 1.4;
+}
+
 .chipEmpty {
   color: #fff;
   letter-spacing: 0.01em;

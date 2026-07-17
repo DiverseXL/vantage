@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import { useWriteContract } from 'wagmi';
+import { useWriteContract, useAccount } from 'wagmi';
 import { parseEther } from 'viem';
 import { useUser } from '../../contexts/UserContext';
 import { useUserBalance } from '../../hooks/useUserBalance';
@@ -23,7 +23,8 @@ interface BettingFormProps {
 const MIN_BET = 0.001;
 
 export function BettingForm({ market, onOptimisticBet }: BettingFormProps) {
-  const { userId } = useUser();
+  const { userId, authStatus, retrySignIn, siweError } = useUser();
+  const { isConnected } = useAccount();
   const { data: balance, refetch } = useUserBalance(userId);
   const queryClient = useQueryClient();
 
@@ -104,14 +105,56 @@ export function BettingForm({ market, onOptimisticBet }: BettingFormProps) {
     );
   }
 
-  if (!userId) {
+  if (market.resolutionProposed && !market.resolved) {
     return (
       <div className={styles.disabledBox} role="note">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
           <circle cx="9" cy="9" r="8" stroke="currentColor" strokeWidth="1.2" />
           <path d="M9 5v4M9 12v.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
         </svg>
-        <span>Connect your wallet in the navigation bar to place a bet.</span>
+        <span>A resolution has been proposed for this market — betting is closed while it awaits finalization.</span>
+      </div>
+    );
+  }
+
+  if (!userId) {
+    if (!isConnected) {
+      return (
+        <div className={styles.disabledBox} role="note">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <circle cx="9" cy="9" r="8" stroke="currentColor" strokeWidth="1.2" />
+            <path d="M9 5v4M9 12v.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+          </svg>
+          <span>Connect your wallet in the navigation bar to place a bet.</span>
+        </div>
+      );
+    }
+
+    return (
+      <div className={styles.disabledBox} role="note">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <circle cx="9" cy="9" r="8" stroke="currentColor" strokeWidth="1.2" />
+          <path d="M9 5v4M9 12v.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+        </svg>
+        <div>
+          <span>
+            {authStatus === 'failed'
+              ? 'Sign-in failed. The backend may be offline, or you may have dismissed the signature prompt.'
+              : 'Sign the message in your wallet to continue.'}
+          </span>
+          <button
+            onClick={retrySignIn}
+            className="btn-pill btn-pill-dark"
+            style={{ marginTop: '10px', padding: '6px 16px', fontSize: '13px' }}
+          >
+            Retry sign-in
+          </button>
+          {authStatus === 'failed' && siweError && (
+            <p style={{ marginTop: '8px', fontSize: '12px', opacity: 0.6 }}>
+              {siweError}
+            </p>
+          )}
+        </div>
       </div>
     );
   }
