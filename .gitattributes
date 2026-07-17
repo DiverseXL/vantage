@@ -1,0 +1,27 @@
+# Auto-detect and use LF line endings for all text files
+* text=auto eol=lf
+
+# Explicitly LF for source code
+*.ts text eol=lf
+*.tsx text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.json text eol=lf
+*.sol text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf
+
+# Lock files are generated - treat as binary to avoid merge issues
+package-lock.json -text
+
+# Binary files should not be modified
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.svg text eol=lf
