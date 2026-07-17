@@ -40,9 +40,9 @@ interface Payment {
 interface MarketLabels {
     outcome0Label: string;
     outcome1Label: string;
-    category?: string;
-    stage?: string;
-    fixtureId?: number;
+    category?: string | undefined;
+    stage?: string | undefined;
+    fixtureId?: number | undefined;
 }
 
 interface LedgerData {
@@ -139,7 +139,11 @@ export async function setMarketLabels(
     fixtureId?: number
 ): Promise<void> {
     await writeLedger((data) => {
-        data.markets[marketId] = { outcome0Label, outcome1Label, category, stage, fixtureId };
+        const entry: MarketLabels = { outcome0Label, outcome1Label };
+        if (category !== undefined) entry.category = category;
+        if (stage !== undefined) entry.stage = stage;
+        if (fixtureId !== undefined) entry.fixtureId = fixtureId;
+        data.markets[marketId] = entry;
     });
 }
 

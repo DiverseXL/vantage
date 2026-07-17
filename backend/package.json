@@ -28,7 +28,8 @@
     "jsonwebtoken": "^9.0.3",
     "lowdb": "^7.0.1",
     "siwe": "^3.0.0",
-    "tweetnacl": "^1.0.3"
+    "tweetnacl": "^1.0.3",
+    "viem": "^2.55.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",

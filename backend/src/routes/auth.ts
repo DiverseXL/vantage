@@ -1,6 +1,7 @@
 import { Router, type Request, type Response, type NextFunction } from "express";
 import { generateNonce, SiweMessage } from "siwe";
 import jwt from "jsonwebtoken";
+import { verifyMessage } from "viem";
 
 export const authRouter = Router();
 
@@ -30,23 +31,36 @@ authRouter.post("/auth/verify", async (req: Request, res: Response) => {
     try {
         const { message, signature } = req.body;
         const siweMessage = new SiweMessage(message);
-        
-        const { data: fields } = await siweMessage.verify({ signature });
 
-        if (!nonces.has(fields.nonce)) {
+        // Use viem's verifyMessage to recover and verify the address,
+        // avoiding the ethers v6 dependency chain that can trigger
+        // "Cannot read properties of undefined (reading 'from')" in
+        // siwe's internal siweMessage.verify() -> ethers Signature.from().
+        const isValid = await verifyMessage({
+            address: siweMessage.address as `0x${string}`,
+            message: siweMessage.prepareMessage(),
+            signature: signature as `0x${string}`,
+        });
+
+        if (!isValid) {
+            res.status(401).json({ error: "Invalid signature" });
+            return;
+        }
+
+        if (!nonces.has(siweMessage.nonce)) {
             res.status(422).json({ error: "Invalid nonce" });
             return;
         }
 
-        nonces.delete(fields.nonce);
+        nonces.delete(siweMessage.nonce);
 
         const token = jwt.sign(
-            { address: fields.address },
+            { address: siweMessage.address },
             JWT_SECRET,
             { expiresIn: "1d" }
         );
 
-        res.json({ token, address: fields.address });
+        res.json({ token, address: siweMessage.address });
     } catch (e: any) {
         res.status(401).json({ error: "Invalid signature" });
     }
