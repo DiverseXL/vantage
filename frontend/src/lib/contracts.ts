@@ -1,4 +1,4 @@
-export const VANTAGE_MARKET_ADDRESS = "0xD6F18e914D5e81ec7fc01DEC728FF7Aa7C5979b9" as `0x${string}`;
+export const VANTAGE_MARKET_ADDRESS = "0xd620B56bFbd43e489656A63C9f9cC1A3dC3d3EF6" as `0x${string}`;
 
 export const VANTAGE_MARKET_ABI = [
   {

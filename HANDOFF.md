@@ -9,7 +9,7 @@ A binary prediction market. Users bet on outcome 0 or 1 for a given market (e.g.
 ## Architecture you're working against
 
 - Smart contract deployed on Injective EVM Testnet, chain ID 1439
-- Contract address: `0x7978b758432C6F71f386064ef8E271054d943378`
+- Contract address: `0xd620B56bFbd43e489656A63C9f9cC1A3dC3d3EF6`
 - Backend (Express/TypeScript) wraps the contract via a relayer wallet - this is a custodial model. Users do NOT need their own wallet or gas to bet. You call the backend API, not the contract directly, for all write actions (bet, claim, create, resolve).
 - Backend runs locally on `http://localhost:3001` by default.
 
@@ -172,7 +172,8 @@ with an appropriate HTTP status (400 for bad input, 401 for missing/wrong admin 
 
 ## Contract reference (only needed if you want to read from the contract directly instead of via the backend - not required)
 
-- Address: `0x7978b758432C6F71f386064ef8E271054d943378`
+- ✅ **Updated**: `0xd620B56bFbd43e489656A63C9f9cC1A3dC3d3EF6`
+  - Old (outdated): `0x7978b758432C6F71f386064ef8E271054d943378`
 - Network: Injective EVM Testnet, chain ID 1439
 - RPC URL: `https://testnet.evm.archival.chain.virtual.json-rpc.injective.network/`
   - Do NOT use `https://k8s.testnet.json-rpc.injective.network/` - this endpoint is known to silently drop broadcast transactions (accepts and returns a hash but never mines it). Confirmed via direct testing. Always use the archival endpoint above.

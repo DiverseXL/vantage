@@ -229,7 +229,7 @@ From `backend/package.json`:
 - Still uses the archival RPC endpoint (`https://testnet.evm.archival.chain.virtual.json-rpc.injective.network/`)
 - Still uses `RELAYER_PRIVATE_KEY` from env
 - The ABI is the same 7-field Market struct (as deployed)
-- The **only notable diff**: the CONTRACT_ADDRESS changed from `0x7978b758432C6F71f386064ef8E271054d943378` (the one mentioned in HANDOFF.md and the baseline) to `0xD6F18e914D5e81ec7fc01DEC728FF7Aa7C5979b9` (the current deployed address). The ignition deployment at `chain-1439/deployed_addresses.json` also reflects `0xD6F18e914D5e81ec7fc01DEC728FF7Aa7C5979b9`.
+- The **only notable diff**: the CONTRACT_ADDRESS changed from `0x7978b758432C6F71f386064ef8E271054d943378` (the one mentioned in HANDOFF.md and the baseline) to `0xd620B56bFbd43e489656A63C9f9cC1A3dC3d3EF6` (the current deployed address). The ignition deployment at `chain-1439/deployed_addresses.json` also reflects `0xd620B56bFbd43e489656A63C9f9cC1A3dC3d3EF6`.
 
 ### `backend/src/ledger.ts` (MODIFIED)
 
@@ -565,7 +565,7 @@ vantage-main/
 
 ### Potential Issues
 
-1. **Contract address mismatch**: The handoff document (`HANDOFF.md`) references contract address `0x7978b758432C6F71f386064ef8E271054d943378`, but the actual deployed address in `deployed_addresses.json` and `contract.ts` is `0xD6F18e914D5e81ec7fc01DEC728FF7Aa7C5979b9`. The HANDOFF.md was written before the latest redeployment.
+1. **Contract address mismatch**: The handoff document (`HANDOFF.md`) references contract address `0x7978b758432C6F71f386064ef8E271054d943378`, but the actual deployed address in `deployed_addresses.json` and `contract.ts` is `0xd620B56bFbd43e489656A63C9f9cC1A3dC3d3EF6`. The HANDOFF.md was written before the latest redeployment.
 
 2. **Insecure JWT default**: `backend/src/routes/auth.ts` defaults to `"super-secret-jwt-key"` if `JWT_SECRET` is not set. This is insecure for production.
 
